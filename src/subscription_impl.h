@@ -3,11 +3,13 @@
 //
 #pragma once
 
+#include <uorb/internal/noncopyable.h>
+
 #include "device_node.h"
 
 namespace uorb {
 
-struct SubscriptionImpl {
+struct SubscriptionImpl : private internal::Noncopyable {
   explicit SubscriptionImpl(DeviceNode &device_node) : dev_(device_node) {
     last_generation_ = device_node.initial_generation();
     dev_.add_subscriber();

@@ -163,6 +163,12 @@ struct orb_pollfd {
 typedef struct orb_pollfd orb_pollfd_t;
 
 /**
+ * A poll substitute similar to Linux's epoll mechanism, the purpose is to
+ * reduce cpu usage.
+ */
+typedef struct orb_epoll orb_epoll_t;
+
+/**
  * return orb_create_publication_multi(meta, nullptr, queue_size);
  * @see orb_create_publication_multi()
  */

@@ -10,6 +10,7 @@
 #include "callback.h"
 #include "device_master.h"
 #include "device_node.h"
+#include "event_poll.h"
 #include "subscription_impl.h"
 
 using uorb::DeviceMaster;
@@ -222,4 +223,15 @@ int orb_poll(struct orb_pollfd *fds, unsigned int nfds, int timeout_ms) {
   }
 
   return updated_num;
+}
+
+orb_epoll_t *orb_epoll_create() {
+  return reinterpret_cast<orb_epoll_t *>(new uorb::EventPollImpl{});
+}
+
+void orb_epoll_destroy(orb_epoll_t **orb_epoll_ptr) {
+  if (orb_epoll_ptr) {
+    delete reinterpret_cast<uorb::EventPollImpl *>(*orb_epoll_ptr);
+    *orb_epoll_ptr = nullptr;
+  }
 }
